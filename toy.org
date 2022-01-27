@@ -1,0 +1,75 @@
+#+title: Toy
+#+options: toc:nil tex:t
+
+References:
+- [[https://orgmode.org/worg/org-contrib/babel/languages/index.html][ob docs by language]]
+- [[http://www.howardism.org/Technical/Emacs/literate-programming-tutorial.html][literate programming tutorial]]
+
+$\alpha + \beta$
+
+#+begin_src emacs-lisp
+  (directory-files ".")
+#+end_src
+
+#+RESULTS:
+| . | .#toy.org | .. | .git | toy.html | toy.org |
+
+can override variables like =org-babel-python-command= or =org-babel-R-command= or set globally
+
+#+begin_src python
+  from os import listdir
+  return listdir(".")
+#+end_src
+
+#+RESULTS:
+| .#toy.org | toy.html | toy.org | .git |
+
+#+begin_src bash :dir /etc :exports both
+  ls | head -n2
+#+end_src
+
+#+RESULTS:
+| NetworkManager |
+| R              |
+
+there are variables like =org-babel-default-header-args:R= for per language defaults one can also set them at various levels of specificity
+
+an example equivalent to previous block:
+
+#+header: :dir /etc :exports both
+#+begin_src bash
+  ls | head -n2
+#+end_src
+
+#+RESULTS:
+| NetworkManager |
+| R              |
+
+* Using property drawers
+:PROPERTIES:
+:header-args: :dir /etc :exports both
+:header-args:python: :dir /var
+:END:
+
+can make a property drawer with =C-c C-x p= or =M-x org-set-property=
+
+a second reference for this is in [[https://orgmode.org/manual/Using-Header-Arguments.html][Using-Header-Arguments]]
+
+note =:session *R*= for naming and/or having multiple sessions
+
+#+begin_src bash
+  ls | head -n2
+#+end_src
+
+#+RESULTS:
+| NetworkManager |
+| R              |
+
+#+name: blah
+#+begin_src python :exports both
+    from os import listdir
+    return listdir(".")
+#+end_src
+
+#+RESULTS: blah
+| tmp | cache | run | db | spool | local | .updated | games | lock | log | opt | mail | lib | empty |
